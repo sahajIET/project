@@ -6,7 +6,7 @@ export const getPost = async (req,res)=>{
         // console.log(postMessages);
         res.status(200).json(postMessages);
     }
-    catch(err) {
+    catch(error) {
         res.status(404).json({message : error.message});
     }
     
