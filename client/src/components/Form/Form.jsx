@@ -13,6 +13,9 @@ const Form = ({currentId, setCurrentId}) => {
     const dispatch = useDispatch();
     const post = useSelector(state=>currentId?state.posts.find(p=>p._id===currentId) : null);
     const handleChange = (e)=>{
+        if (e.target.name==='tags') {
+            return setPostData({...postData, tags : e.target.value.split(e.target.value.includes(',')?',':' ')});
+        }
         setPostData({
             ...postData, [e.target.name] : e.target.value
         })
