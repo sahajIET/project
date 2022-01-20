@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({limit :"30mb", extended : true}));
 dotenv.config();
 //Routes Setup
 app.use('/posts', postRoutes);
-
+app.get('/', (req,res)=>{
+    res.send('Hello to memories');
+})
 
 
 //heroku will automatically populate env.PORT
