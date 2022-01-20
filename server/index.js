@@ -1,24 +1,24 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import postRoutes from './routes/posts.js';
 const app = express();
-
 app.use(bodyParser.json({limit : "30mb", extended : true}));
 app.use(cors());
 app.use(bodyParser.urlencoded({limit :"30mb", extended : true}));
 
-
+dotenv.config();
 //Routes Setup
 app.use('/posts', postRoutes);
 
 
-const CONNECTION_URL = 'mongodb+srv://kunals131:kunals131@cluster0.o0tf1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
 //heroku will automatically populate env.PORT
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL, {
+mongoose.connect(process.env.CONNECTION_URL, {
     useNewUrlParser : true, 
     useUnifiedTopology : true,
 })
