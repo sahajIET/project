@@ -15,7 +15,7 @@ app.use('/posts', postRoutes);
 app.get('/', (req,res)=>{
     res.send('Hello to memories');
 })
-
+     
 
 //heroku will automatically populate env.PORT
 const PORT = process.env.PORT || 5000;
