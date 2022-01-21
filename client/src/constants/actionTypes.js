@@ -4,4 +4,10 @@ export const postActionTypes = {
     FETCH_ALL_POSTS : 'FETCH_ALL_POSTS',
     LIKE_POST : 'LIKE_POST',
     DELETE_POST : 'DELETE_POST',
+
+}
+
+export const authActionTypes = {
+    AUTH : 'AUTH',
+    LOGOUT : 'LOGOUT',
 }

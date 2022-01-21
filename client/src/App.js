@@ -20,9 +20,7 @@ const App = () => {
            <Route exact path="/">
           <Home></Home>
           </Route>
-          <Route exact path="/auth">
-            <Auth></Auth>
-          </Route>
+          <Route exact path="/auth" component={Auth}/>
           </Switch>
        
       </Container>
