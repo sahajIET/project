@@ -7,8 +7,9 @@ import FileBase from 'react-file-base64';
 import {updatePost, createPost} from '../../actions/posts';
 const Form = ({currentId, setCurrentId}) => {
     const classes = styles();
+    const user = JSON.parse(localStorage.getItem('profile'));
     const [postData,setPostData] = useState({
-        creator : '', title : '', message : '', tags : '', selectedFile : '',
+         title : '', message : '', tags : '', selectedFile : '',
     });
     const dispatch = useDispatch();
     const post = useSelector(state=>currentId?state.posts.find(p=>p._id===currentId) : null);
@@ -26,11 +27,12 @@ const Form = ({currentId, setCurrentId}) => {
 
     const handleSubmit = (e)=>{
         e.preventDefault();
+        let postNewData = {...postData, name : user?.result?.name}
         if (currentId) {
-            dispatch(updatePost(currentId, postData))
+            dispatch(updatePost(currentId,postNewData))
         }
         else {
-        dispatch(createPost(postData));
+        dispatch(createPost(postNewData));
         console.log(postData);
         }
         clear();
@@ -38,17 +40,25 @@ const Form = ({currentId, setCurrentId}) => {
     const clear = ()=>{
         setCurrentId(null);
         setPostData({
-            creator : '', title : '', message : '', tags : '', selectedFile : '',
+            title : '', message : '', tags : '', selectedFile : '',
         });
+    }
+
+    if (!user?.result?.name) {
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant='h6' align='center'>
+                Please Sign In to create your own memories and like other's memories.      
+                </Typography>
+            </Paper>
+        )
     }
 
     return <div>
         <Paper className={classes.paper}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate  onSubmit={handleSubmit}>
                 <Typography variant='h6'>{currentId?'Editing':'Creating'} a Post</Typography>
-                <TextField name='creator' variant='outlined' label='creator' fullWidth value={postData.creator}
-               onChange={handleChange}
-                ></TextField>
+   
                 <TextField name='title' variant='outlined' label='title' fullWidth value={postData.title}
                onChange={handleChange}
                 ></TextField>

@@ -15,8 +15,7 @@ import { GoogleLogin } from "react-google-login";
 import Input from "./Input";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
-
-
+import { signin,signup } from "../../actions/auth";
 
 const initialState = {
   fistName : '',
@@ -55,6 +54,16 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    if (isSignup) {
+      let {firstName, lastName, password, email} = formData;
+      const formToSubmit = {firstName,lastName,password,email};
+      dispatch(signup(formToSubmit,history));
+    } else {
+
+      let {password, email} = formData;
+      const formToSubmit = {password,email};
+      dispatch(signin(formToSubmit,history));
+    }
    
   };
   const handleChange = (e) => {

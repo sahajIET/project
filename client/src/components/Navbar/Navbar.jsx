@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {AppBar, Typography, Avatar, Toolbar, Button} from '@material-ui/core';
 import useStyles from './styles'
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import decode from 'jwt-decode';
 // import {Link} from 'react-router-dom'
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
-    const logout = ()=>{
+    const logout = useCallback(()=>{
       dispatch({type : 'LOGOUT'})
       history.push('/');
       setUser(null);
-    }
+    }, [dispatch, history]);
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     console.log(user);
     useEffect(()=>{
       const token = user?.token;
       //JWT...
+      if (token) {
+        const decodedToken = decode(token);
+        if (decodedToken.exp*1000<new Date().getTime()){
+          logout();
+        }
+      }
 
       setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [location])
+    }, [location, logout, user])
   return (
     <>
       <AppBar className={classes.appBar} position="static" color="inherit">

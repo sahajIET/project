@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 const app = express();
 app.use(bodyParser.json({limit : "30mb", extended : true}));
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({limit :"30mb", extended : true}));
 dotenv.config();
 //Routes Setup
 app.use('/posts', postRoutes);
+app.use('/users', userRoutes)
 app.get('/', (req,res)=>{
     res.send('Hello to memories');
 })
