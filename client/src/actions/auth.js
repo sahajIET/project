@@ -22,3 +22,9 @@ export const signup = (formData,history)=>async(dispatch)=>{
 
     }
 }
+
+export const logout = ()=>{
+    return {
+        type : 'LOGOUT'
+    }
+}

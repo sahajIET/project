@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import FileBase from 'react-file-base64';
 import {updatePost, createPost} from '../../actions/posts';
+import { useRef } from 'react';
 const Form = ({currentId, setCurrentId}) => {
     const classes = styles();
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -43,6 +44,7 @@ const Form = ({currentId, setCurrentId}) => {
             title : '', message : '', tags : '', selectedFile : '',
         });
     }
+    const ref = useRef();
 
     if (!user?.result?.name) {
         return (
@@ -57,24 +59,25 @@ const Form = ({currentId, setCurrentId}) => {
     return <div>
         <Paper className={classes.paper}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate  onSubmit={handleSubmit}>
-                <Typography variant='h6'>{currentId?'Editing':'Creating'} a Post</Typography>
+                <Typography variant='h6'>{currentId?'Edit':'Create'}  Post</Typography>
    
-                <TextField name='title' variant='outlined' label='title' fullWidth value={postData.title}
+                <TextField name='title' variant='outlined' label='Title' fullWidth value={postData.title}
                onChange={handleChange}
                 ></TextField>
-                <TextField name='tags' variant='outlined' label='tags' fullWidth value={postData.tags}
+                <TextField name='tags' variant='outlined' label='Tags' fullWidth value={postData.tags}
                onChange={handleChange}
                 ></TextField>
-                <TextField name='message' variant='outlined' label='message' fullWidth value={postData.message}
+                <TextField name='message' variant='outlined' label='Message' fullWidth value={postData.message}
                onChange={handleChange}
                 ></TextField>
-               <div className={classes.fileInput}>
+                <div onClick={()=>ref.current.click()} className='px-4 py-2 w-full relative text-center my-4 cursor-pointer bg-[#0a4f79] text-white  rounded-md'>Upload  <div ref={ref} className='absolute top-0 left-[30%] opacity-0'>
                    <FileBase
                    type="file"
                    multiple={false}
                    onDone={({base64})=>setPostData({...postData,selectedFile : base64})}
                    />
-               </div>
+               </div></div>
+              
                <Button className={classes.buttonSubmit} type="submit" variant='contained' color='primary' size='large' fullWidth>Submit</Button>
                <Button  variant='contained' color='secondary' size='small' onClick={clear} fullWidth>Clear</Button>
             </form>

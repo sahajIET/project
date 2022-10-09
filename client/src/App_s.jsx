@@ -3,19 +3,26 @@ import CardComponent from './TailwindComponents/CardComponent'
 import Header from './TailwindComponents/Header'
 import Profile from './TailwindComponents/Profile'
 import postsdata from './postsdata.json'
+import Home from './TailwindComponents/pages/Home'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Container } from 'postcss'
+import Navbar from './components/Navbar/Navbar'
+import Auth from './components/Auth/Auth'
+
 const App = () => {
   return (
-    <div className='grid grid-cols-[3fr_1fr] bg-white'>
-        <div>
-            <Header/>
-            <div className='bg-[#fafcfe] p-5 grid grid-cols-3 gap-6'>
-                {postsdata.map((p,idx)=><CardComponent key={idx} data={p}/>)}
-            </div>
-        </div>
-        <div className=''>
-          <Profile/>
-        </div>
-    </div>
+    <BrowserRouter>
+
+       {/* <Navbar/> */}
+       <Switch>
+         <Route exact path="/">
+        <Home></Home>
+        </Route>
+        <Route exact path="/auth" component={Auth}/>
+        </Switch>
+     
+
+    </BrowserRouter>
   )
 }
 
