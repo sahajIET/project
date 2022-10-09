@@ -9,6 +9,7 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom';
 import Auth from './components/Auth/Auth.jsx';
 import { getPosts } from './actions/posts.js';
 import Navbar from './components/Navbar/Navbar.jsx';
+
 const App = () => {
 
     const classes = useStyles();
